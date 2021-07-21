@@ -1494,6 +1494,9 @@ public class InvoiceUpdateParams extends ApiRequestParams {
       @SerializedName("bancontact")
       BANCONTACT("bancontact"),
 
+      @SerializedName("boleto")
+      BOLETO("boleto"),
+
       @SerializedName("card")
       CARD("card"),
 
@@ -1513,7 +1516,10 @@ public class InvoiceUpdateParams extends ApiRequestParams {
       SEPA_DEBIT("sepa_debit"),
 
       @SerializedName("sofort")
-      SOFORT("sofort");
+      SOFORT("sofort"),
+
+      @SerializedName("wechat_pay")
+      WECHAT_PAY("wechat_pay");
 
       @Getter(onMethod_ = {@Override})
       private final String value;

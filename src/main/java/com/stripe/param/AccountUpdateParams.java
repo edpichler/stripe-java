@@ -71,7 +71,7 @@ public class AccountUpdateParams extends ApiRequestParams {
    * A card or bank account to attach to the account for receiving <a
    * href="https://stripe.com/docs/connect/bank-debit-card-payouts">payouts</a> (you won’t be able
    * to use it for top-ups). You can provide either a token, like the ones returned by <a
-   * href="https://stripe.com/docs/stripe.js">Stripe.js</a>, or a dictionary, as documented in the
+   * href="https://stripe.com/docs/stripe-js">Stripe.js</a>, or a dictionary, as documented in the
    * {@code external_account} parameter for <a
    * href="https://stripe.com/docs/api#account_create_bank_account">bank account</a> creation.
    * &lt;br&gt;&lt;br&gt;By default, providing an external account sets it as the new default
@@ -343,7 +343,7 @@ public class AccountUpdateParams extends ApiRequestParams {
      * A card or bank account to attach to the account for receiving <a
      * href="https://stripe.com/docs/connect/bank-debit-card-payouts">payouts</a> (you won’t be able
      * to use it for top-ups). You can provide either a token, like the ones returned by <a
-     * href="https://stripe.com/docs/stripe.js">Stripe.js</a>, or a dictionary, as documented in the
+     * href="https://stripe.com/docs/stripe-js">Stripe.js</a>, or a dictionary, as documented in the
      * {@code external_account} parameter for <a
      * href="https://stripe.com/docs/api#account_create_bank_account">bank account</a> creation.
      * &lt;br&gt;&lt;br&gt;By default, providing an external account sets it as the new default
@@ -360,7 +360,7 @@ public class AccountUpdateParams extends ApiRequestParams {
      * A card or bank account to attach to the account for receiving <a
      * href="https://stripe.com/docs/connect/bank-debit-card-payouts">payouts</a> (you won’t be able
      * to use it for top-ups). You can provide either a token, like the ones returned by <a
-     * href="https://stripe.com/docs/stripe.js">Stripe.js</a>, or a dictionary, as documented in the
+     * href="https://stripe.com/docs/stripe-js">Stripe.js</a>, or a dictionary, as documented in the
      * {@code external_account} parameter for <a
      * href="https://stripe.com/docs/api#account_create_bank_account">bank account</a> creation.
      * &lt;br&gt;&lt;br&gt;By default, providing an external account sets it as the new default
@@ -931,6 +931,10 @@ public class AccountUpdateParams extends ApiRequestParams {
     @SerializedName("bancontact_payments")
     BancontactPayments bancontactPayments;
 
+    /** The boleto_payments capability. */
+    @SerializedName("boleto_payments")
+    BoletoPayments boletoPayments;
+
     /** The card_issuing capability. */
     @SerializedName("card_issuing")
     CardIssuing cardIssuing;
@@ -1014,6 +1018,7 @@ public class AccountUpdateParams extends ApiRequestParams {
         AuBecsDebitPayments auBecsDebitPayments,
         BacsDebitPayments bacsDebitPayments,
         BancontactPayments bancontactPayments,
+        BoletoPayments boletoPayments,
         CardIssuing cardIssuing,
         CardPayments cardPayments,
         CartesBancairesPayments cartesBancairesPayments,
@@ -1037,6 +1042,7 @@ public class AccountUpdateParams extends ApiRequestParams {
       this.auBecsDebitPayments = auBecsDebitPayments;
       this.bacsDebitPayments = bacsDebitPayments;
       this.bancontactPayments = bancontactPayments;
+      this.boletoPayments = boletoPayments;
       this.cardIssuing = cardIssuing;
       this.cardPayments = cardPayments;
       this.cartesBancairesPayments = cartesBancairesPayments;
@@ -1071,6 +1077,8 @@ public class AccountUpdateParams extends ApiRequestParams {
       private BacsDebitPayments bacsDebitPayments;
 
       private BancontactPayments bancontactPayments;
+
+      private BoletoPayments boletoPayments;
 
       private CardIssuing cardIssuing;
 
@@ -1116,6 +1124,7 @@ public class AccountUpdateParams extends ApiRequestParams {
             this.auBecsDebitPayments,
             this.bacsDebitPayments,
             this.bancontactPayments,
+            this.boletoPayments,
             this.cardIssuing,
             this.cardPayments,
             this.cartesBancairesPayments,
@@ -1164,6 +1173,12 @@ public class AccountUpdateParams extends ApiRequestParams {
       /** The bancontact_payments capability. */
       public Builder setBancontactPayments(BancontactPayments bancontactPayments) {
         this.bancontactPayments = bancontactPayments;
+        return this;
+      }
+
+      /** The boleto_payments capability. */
+      public Builder setBoletoPayments(BoletoPayments boletoPayments) {
+        this.boletoPayments = boletoPayments;
         return this;
       }
 
@@ -1664,6 +1679,84 @@ public class AccountUpdateParams extends ApiRequestParams {
          * Add all map key/value pairs to `extraParams` map. A map is initialized for the first
          * `put/putAll` call, and subsequent calls add additional key/value pairs to the original
          * map. See {@link AccountUpdateParams.Capabilities.BancontactPayments#extraParams} for the
+         * field documentation.
+         */
+        public Builder putAllExtraParam(Map<String, Object> map) {
+          if (this.extraParams == null) {
+            this.extraParams = new HashMap<>();
+          }
+          this.extraParams.putAll(map);
+          return this;
+        }
+
+        /**
+         * Passing true requests the capability for the account, if it is not already requested. A
+         * requested capability may not immediately become active. Any requirements to activate the
+         * capability are returned in the {@code requirements} arrays.
+         */
+        public Builder setRequested(Boolean requested) {
+          this.requested = requested;
+          return this;
+        }
+      }
+    }
+
+    @Getter
+    public static class BoletoPayments {
+      /**
+       * Map of extra parameters for custom features not available in this client library. The
+       * content in this map is not serialized under this field's {@code @SerializedName} value.
+       * Instead, each key/value pair is serialized as if the key is a root-level field (serialized)
+       * name in this param object. Effectively, this map is flattened to its parent instance.
+       */
+      @SerializedName(ApiRequestParams.EXTRA_PARAMS_KEY)
+      Map<String, Object> extraParams;
+
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A
+       * requested capability may not immediately become active. Any requirements to activate the
+       * capability are returned in the {@code requirements} arrays.
+       */
+      @SerializedName("requested")
+      Boolean requested;
+
+      private BoletoPayments(Map<String, Object> extraParams, Boolean requested) {
+        this.extraParams = extraParams;
+        this.requested = requested;
+      }
+
+      public static Builder builder() {
+        return new Builder();
+      }
+
+      public static class Builder {
+        private Map<String, Object> extraParams;
+
+        private Boolean requested;
+
+        /** Finalize and obtain parameter instance from this builder. */
+        public BoletoPayments build() {
+          return new BoletoPayments(this.extraParams, this.requested);
+        }
+
+        /**
+         * Add a key/value pair to `extraParams` map. A map is initialized for the first
+         * `put/putAll` call, and subsequent calls add additional key/value pairs to the original
+         * map. See {@link AccountUpdateParams.Capabilities.BoletoPayments#extraParams} for the
+         * field documentation.
+         */
+        public Builder putExtraParam(String key, Object value) {
+          if (this.extraParams == null) {
+            this.extraParams = new HashMap<>();
+          }
+          this.extraParams.put(key, value);
+          return this;
+        }
+
+        /**
+         * Add all map key/value pairs to `extraParams` map. A map is initialized for the first
+         * `put/putAll` call, and subsequent calls add additional key/value pairs to the original
+         * map. See {@link AccountUpdateParams.Capabilities.BoletoPayments#extraParams} for the
          * field documentation.
          */
         public Builder putAllExtraParam(Map<String, Object> map) {
@@ -5142,7 +5235,7 @@ public class AccountUpdateParams extends ApiRequestParams {
      * The government-issued ID number of the individual, as appropriate for the representative’s
      * country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number in
      * Canada). Instead of the number itself, you can also provide a <a
-     * href="https://stripe.com/docs/stripe.js#collecting-pii-data">PII token created with
+     * href="https://stripe.com/docs/js/tokens_sources/create_token?type=pii">PII token created with
      * Stripe.js</a>.
      */
     @SerializedName("id_number")
@@ -5432,8 +5525,8 @@ public class AccountUpdateParams extends ApiRequestParams {
        * The government-issued ID number of the individual, as appropriate for the representative’s
        * country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number
        * in Canada). Instead of the number itself, you can also provide a <a
-       * href="https://stripe.com/docs/stripe.js#collecting-pii-data">PII token created with
-       * Stripe.js</a>.
+       * href="https://stripe.com/docs/js/tokens_sources/create_token?type=pii">PII token created
+       * with Stripe.js</a>.
        */
       public Builder setIdNumber(String idNumber) {
         this.idNumber = idNumber;
@@ -5444,8 +5537,8 @@ public class AccountUpdateParams extends ApiRequestParams {
        * The government-issued ID number of the individual, as appropriate for the representative’s
        * country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number
        * in Canada). Instead of the number itself, you can also provide a <a
-       * href="https://stripe.com/docs/stripe.js#collecting-pii-data">PII token created with
-       * Stripe.js</a>.
+       * href="https://stripe.com/docs/js/tokens_sources/create_token?type=pii">PII token created
+       * with Stripe.js</a>.
        */
       public Builder setIdNumber(EmptyParam idNumber) {
         this.idNumber = idNumber;

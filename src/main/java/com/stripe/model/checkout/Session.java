@@ -227,6 +227,10 @@ public class Session extends ApiResource implements HasId {
   @SerializedName("total_details")
   TotalDetails totalDetails;
 
+  /** The URL to the Checkout Session. */
+  @SerializedName("url")
+  String url;
+
   /** Get ID of expandable {@code customer} object. */
   public String getCustomer() {
     return (this.customer != null) ? this.customer.getId() : null;
@@ -465,8 +469,9 @@ public class Session extends ApiResource implements HasId {
        * {@code ch_vat}, {@code mx_rfc}, {@code sg_uen}, {@code ru_inn}, {@code ru_kpp}, {@code
        * ca_bn}, {@code hk_br}, {@code es_cif}, {@code tw_vat}, {@code th_vat}, {@code jp_cn},
        * {@code jp_rn}, {@code li_uid}, {@code my_itn}, {@code us_ein}, {@code kr_brn}, {@code
-       * ca_qst}, {@code my_sst}, {@code sg_gst}, {@code ae_trn}, {@code cl_tin}, {@code sa_vat},
-       * {@code id_npwp}, {@code my_frp}, or {@code unknown}.
+       * ca_qst}, {@code ca_gst_hst}, {@code ca_pst_bc}, {@code ca_pst_mb}, {@code ca_pst_sk},
+       * {@code my_sst}, {@code sg_gst}, {@code ae_trn}, {@code cl_tin}, {@code sa_vat}, {@code
+       * id_npwp}, {@code my_frp}, {@code il_vat}, or {@code unknown}.
        */
       @SerializedName("type")
       String type;
@@ -483,6 +488,12 @@ public class Session extends ApiResource implements HasId {
   public static class PaymentMethodOptions extends StripeObject {
     @SerializedName("acss_debit")
     AcssDebit acssDebit;
+
+    @SerializedName("boleto")
+    Boleto boleto;
+
+    @SerializedName("oxxo")
+    Oxxo oxxo;
 
     @Getter
     @Setter
@@ -538,6 +549,32 @@ public class Session extends ApiResource implements HasId {
         @SerializedName("transaction_type")
         String transactionType;
       }
+    }
+
+    @Getter
+    @Setter
+    @EqualsAndHashCode(callSuper = false)
+    public static class Boleto extends StripeObject {
+      /**
+       * The number of calendar days before a Boleto voucher expires. For example, if you create a
+       * Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will
+       * expire on Wednesday at 23:59 America/Sao_Paulo time.
+       */
+      @SerializedName("expires_after_days")
+      Long expiresAfterDays;
+    }
+
+    @Getter
+    @Setter
+    @EqualsAndHashCode(callSuper = false)
+    public static class Oxxo extends StripeObject {
+      /**
+       * The number of calendar days before an OXXO invoice expires. For example, if you create an
+       * OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on
+       * Wednesday at 23:59 America/Mexico_City time.
+       */
+      @SerializedName("expires_after_days")
+      Long expiresAfterDays;
     }
   }
 

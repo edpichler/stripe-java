@@ -1026,6 +1026,9 @@ public class Charge extends ApiResource implements MetadataStore<Charge>, Balanc
     @SerializedName("bancontact")
     Bancontact bancontact;
 
+    @SerializedName("boleto")
+    Boleto boleto;
+
     @SerializedName("card")
     Card card;
 
@@ -1088,6 +1091,9 @@ public class Charge extends ApiResource implements MetadataStore<Charge>, Balanc
 
     @SerializedName("wechat")
     Wechat wechat;
+
+    @SerializedName("wechat_pay")
+    WechatPay wechatPay;
 
     @Getter
     @Setter
@@ -1340,6 +1346,15 @@ public class Charge extends ApiResource implements MetadataStore<Charge>, Balanc
         this.generatedSepaDebitMandate =
             new ExpandableField<Mandate>(expandableObject.getId(), expandableObject);
       }
+    }
+
+    @Getter
+    @Setter
+    @EqualsAndHashCode(callSuper = false)
+    public static class Boleto extends StripeObject {
+      /** Uniquely identifies this customer tax_id (CNPJ or CPF). */
+      @SerializedName("tax_id")
+      String taxId;
     }
 
     @Getter
@@ -2358,6 +2373,22 @@ public class Charge extends ApiResource implements MetadataStore<Charge>, Balanc
     @Setter
     @EqualsAndHashCode(callSuper = false)
     public static class Wechat extends StripeObject {}
+
+    @Getter
+    @Setter
+    @EqualsAndHashCode(callSuper = false)
+    public static class WechatPay extends StripeObject {
+      /**
+       * Uniquely identifies this particular WeChat Pay account. You can use this attribute to check
+       * whether two WeChat accounts are the same.
+       */
+      @SerializedName("fingerprint")
+      String fingerprint;
+
+      /** Transaction ID of this particular WeChat Pay transaction. */
+      @SerializedName("transaction_id")
+      String transactionId;
+    }
   }
 
   @Getter

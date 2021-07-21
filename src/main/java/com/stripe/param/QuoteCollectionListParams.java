@@ -10,11 +10,7 @@ import java.util.Map;
 import lombok.Getter;
 
 @Getter
-public class PaymentMethodListParams extends ApiRequestParams {
-  /** The ID of the customer whose PaymentMethods will be retrieved. */
-  @SerializedName("customer")
-  String customer;
-
+public class QuoteCollectionListParams extends ApiRequestParams {
   /**
    * A cursor for use in pagination. {@code ending_before} is an object ID that defines your place
    * in the list. For instance, if you make a list request and receive 100 objects, starting with
@@ -53,25 +49,17 @@ public class PaymentMethodListParams extends ApiRequestParams {
   @SerializedName("starting_after")
   String startingAfter;
 
-  /** A required filter on the list, based on the object {@code type} field. */
-  @SerializedName("type")
-  Type type;
-
-  private PaymentMethodListParams(
-      String customer,
+  private QuoteCollectionListParams(
       String endingBefore,
       List<String> expand,
       Map<String, Object> extraParams,
       Long limit,
-      String startingAfter,
-      Type type) {
-    this.customer = customer;
+      String startingAfter) {
     this.endingBefore = endingBefore;
     this.expand = expand;
     this.extraParams = extraParams;
     this.limit = limit;
     this.startingAfter = startingAfter;
-    this.type = type;
   }
 
   public static Builder builder() {
@@ -79,8 +67,6 @@ public class PaymentMethodListParams extends ApiRequestParams {
   }
 
   public static class Builder {
-    private String customer;
-
     private String endingBefore;
 
     private List<String> expand;
@@ -91,24 +77,10 @@ public class PaymentMethodListParams extends ApiRequestParams {
 
     private String startingAfter;
 
-    private Type type;
-
     /** Finalize and obtain parameter instance from this builder. */
-    public PaymentMethodListParams build() {
-      return new PaymentMethodListParams(
-          this.customer,
-          this.endingBefore,
-          this.expand,
-          this.extraParams,
-          this.limit,
-          this.startingAfter,
-          this.type);
-    }
-
-    /** The ID of the customer whose PaymentMethods will be retrieved. */
-    public Builder setCustomer(String customer) {
-      this.customer = customer;
-      return this;
+    public QuoteCollectionListParams build() {
+      return new QuoteCollectionListParams(
+          this.endingBefore, this.expand, this.extraParams, this.limit, this.startingAfter);
     }
 
     /**
@@ -125,7 +97,7 @@ public class PaymentMethodListParams extends ApiRequestParams {
     /**
      * Add an element to `expand` list. A list is initialized for the first `add/addAll` call, and
      * subsequent calls adds additional elements to the original list. See {@link
-     * PaymentMethodListParams#expand} for the field documentation.
+     * QuoteCollectionListParams#expand} for the field documentation.
      */
     public Builder addExpand(String element) {
       if (this.expand == null) {
@@ -138,7 +110,7 @@ public class PaymentMethodListParams extends ApiRequestParams {
     /**
      * Add all elements to `expand` list. A list is initialized for the first `add/addAll` call, and
      * subsequent calls adds additional elements to the original list. See {@link
-     * PaymentMethodListParams#expand} for the field documentation.
+     * QuoteCollectionListParams#expand} for the field documentation.
      */
     public Builder addAllExpand(List<String> elements) {
       if (this.expand == null) {
@@ -151,7 +123,7 @@ public class PaymentMethodListParams extends ApiRequestParams {
     /**
      * Add a key/value pair to `extraParams` map. A map is initialized for the first `put/putAll`
      * call, and subsequent calls add additional key/value pairs to the original map. See {@link
-     * PaymentMethodListParams#extraParams} for the field documentation.
+     * QuoteCollectionListParams#extraParams} for the field documentation.
      */
     public Builder putExtraParam(String key, Object value) {
       if (this.extraParams == null) {
@@ -164,7 +136,7 @@ public class PaymentMethodListParams extends ApiRequestParams {
     /**
      * Add all map key/value pairs to `extraParams` map. A map is initialized for the first
      * `put/putAll` call, and subsequent calls add additional key/value pairs to the original map.
-     * See {@link PaymentMethodListParams#extraParams} for the field documentation.
+     * See {@link QuoteCollectionListParams#extraParams} for the field documentation.
      */
     public Builder putAllExtraParam(Map<String, Object> map) {
       if (this.extraParams == null) {
@@ -192,78 +164,6 @@ public class PaymentMethodListParams extends ApiRequestParams {
     public Builder setStartingAfter(String startingAfter) {
       this.startingAfter = startingAfter;
       return this;
-    }
-
-    /** A required filter on the list, based on the object {@code type} field. */
-    public Builder setType(Type type) {
-      this.type = type;
-      return this;
-    }
-  }
-
-  public enum Type implements ApiRequestParams.EnumParam {
-    @SerializedName("acss_debit")
-    ACSS_DEBIT("acss_debit"),
-
-    @SerializedName("afterpay_clearpay")
-    AFTERPAY_CLEARPAY("afterpay_clearpay"),
-
-    @SerializedName("alipay")
-    ALIPAY("alipay"),
-
-    @SerializedName("au_becs_debit")
-    AU_BECS_DEBIT("au_becs_debit"),
-
-    @SerializedName("bacs_debit")
-    BACS_DEBIT("bacs_debit"),
-
-    @SerializedName("bancontact")
-    BANCONTACT("bancontact"),
-
-    @SerializedName("boleto")
-    BOLETO("boleto"),
-
-    @SerializedName("card")
-    CARD("card"),
-
-    @SerializedName("card_present")
-    CARD_PRESENT("card_present"),
-
-    @SerializedName("eps")
-    EPS("eps"),
-
-    @SerializedName("fpx")
-    FPX("fpx"),
-
-    @SerializedName("giropay")
-    GIROPAY("giropay"),
-
-    @SerializedName("grabpay")
-    GRABPAY("grabpay"),
-
-    @SerializedName("ideal")
-    IDEAL("ideal"),
-
-    @SerializedName("oxxo")
-    OXXO("oxxo"),
-
-    @SerializedName("p24")
-    P24("p24"),
-
-    @SerializedName("sepa_debit")
-    SEPA_DEBIT("sepa_debit"),
-
-    @SerializedName("sofort")
-    SOFORT("sofort"),
-
-    @SerializedName("wechat_pay")
-    WECHAT_PAY("wechat_pay");
-
-    @Getter(onMethod_ = {@Override})
-    private final String value;
-
-    Type(String value) {
-      this.value = value;
     }
   }
 }

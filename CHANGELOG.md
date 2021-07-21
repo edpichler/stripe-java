@@ -1,5 +1,57 @@
 # Changelog
 
+## 20.65.0 - 2021-07-20
+* [#1238](https://github.com/stripe/stripe-java/pull/1238) API Updates
+  * Add support for `wallet` on `Issuing.Transaction`
+  * Add support for `ideal` on `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, and `PaymentIntent.payment_method_options`
+
+
+## 20.64.0 - 2021-07-14
+* [#1237](https://github.com/stripe/stripe-java/pull/1237) API Updates
+  * Add support for `quote.accepted`, `quote.canceled`, `quote.created`, and `quote.finalized` events.
+* [#1236](https://github.com/stripe/stripe-java/pull/1236) API Updates
+  * Add support for `list_computed_upfront_line_items` method on resource `Quote`
+
+## 20.63.1 - 2021-07-09
+* [#1233](https://github.com/stripe/stripe-java/pull/1233) Remove inappropriate list method from QuoteCollection
+
+## 20.63.0 - 2021-07-09
+* [#1231](https://github.com/stripe/stripe-java/pull/1231) API Updates
+  * Add support for new resource `Quote`
+  * Add support for `quote` on `Invoice`
+
+## 20.62.0 - 2021-06-30
+* [#1229](https://github.com/stripe/stripe-java/pull/1229) API Updates
+  * Add support for new value `boleto` on enums `InvoiceCreateParams.payment_settings.payment_method_types[]`, and `InvoiceUpdateParams.payment_settings.payment_method_types[]`.
+
+## 20.61.0 - 2021-06-30
+* [#1228](https://github.com/stripe/stripe-java/pull/1228) API Updates
+  * Add support for `wechat_pay` on `Charge.payment_method_details`, `CheckoutSessionCreateParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntent.payment_method_options`, `PaymentMethodCreateParams`, and `PaymentMethod`
+  * Add support for new value `wechat_pay` on enums `CheckoutSessionCreateParams.payment_method_types[]` `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`,`PaymentIntentConfirmParams.payment_method_data.type`, `PaymentMethodCreateParams.type`, and `PaymentMethodListParams.type`
+  * Add support for `wechat_pay_display_qr_code`, `wechat_pay_redirect_to_android_app`, and `wechat_pay_redirect_to_ios_app` on `PaymentIntent.next_action`
+
+## 20.60.0 - 2021-06-29
+* [#1227](https://github.com/stripe/stripe-java/pull/1227) API Updates
+  * Added support for `boleto_payments` on `Account.capabilities`
+  * Added support for `boleto` and `oxxo` on `SessionCreateParams` and `Session`
+* [#1207](https://github.com/stripe/stripe-java/pull/1207) Streaming requests
+
+## 20.59.0 - 2021-06-25
+* [#1225](https://github.com/stripe/stripe-java/pull/1225) API Updates
+  * Added support for `boleto` on `PaymentMethodCreateParams`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `Charge.payment_method_details` and `PaymentMethod`
+  * `PaymentMethodListParams.type`, `PaymentMethodCreateParams.type`, `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`  added new enum members: `boleto`
+  * Added support for `boleto_display_details` on `PaymentIntent.next_action`
+  * `TaxIdCreateParams.type`, `InvoiceLineItemListUpcomingParams.customer_details.tax_ids[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, and `CustomerCreateParams.tax_id_data[].type`, added new enum members: `il_vat`.
+* [#1218](https://github.com/stripe/stripe-java/pull/1218) Remove Travis CI
+
+## 20.58.0 - 2021-06-18
+* [#1222](https://github.com/stripe/stripe-java/pull/1222) API Updates
+  * Add support for new TaxId types: `ca_pst_mb`, `ca_pst_bc`, `ca_gst_hst`, and `ca_pst_sk`.
+
+## 20.57.0 - 2021-06-16
+* [#1221](https://github.com/stripe/stripe-java/pull/1221) API Updates
+  * Add support for `url` on Checkout `Session`
+
 ## 20.56.0 - 2021-06-07
 * [#1219](https://github.com/stripe/stripe-java/pull/1219) API Updates
   * Added support for `TaxIdCollection` on `SessionCreateParams` and `Session.taxIdCollection`

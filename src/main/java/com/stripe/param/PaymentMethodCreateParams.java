@@ -62,6 +62,13 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
   BillingDetails billingDetails;
 
   /**
+   * If this is a {@code boleto} PaymentMethod, this hash contains details about the Boleto payment
+   * method.
+   */
+  @SerializedName("boleto")
+  Boleto boleto;
+
+  /**
    * If this is a {@code card} PaymentMethod, this hash contains the user's card details. For
    * backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay,
    * Amex Express Checkout, or legacy Checkout) into the card hash with format {@code card: {token:
@@ -179,6 +186,13 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
   @SerializedName("type")
   Type type;
 
+  /**
+   * If this is an {@code wechat_pay} PaymentMethod, this hash contains details about the wechat_pay
+   * payment method.
+   */
+  @SerializedName("wechat_pay")
+  WechatPay wechatPay;
+
   private PaymentMethodCreateParams(
       AcssDebit acssDebit,
       AfterpayClearpay afterpayClearpay,
@@ -187,6 +201,7 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
       BacsDebit bacsDebit,
       Bancontact bancontact,
       BillingDetails billingDetails,
+      Boleto boleto,
       Object card,
       String customer,
       Eps eps,
@@ -203,7 +218,8 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
       String paymentMethod,
       SepaDebit sepaDebit,
       Sofort sofort,
-      Type type) {
+      Type type,
+      WechatPay wechatPay) {
     this.acssDebit = acssDebit;
     this.afterpayClearpay = afterpayClearpay;
     this.alipay = alipay;
@@ -211,6 +227,7 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
     this.bacsDebit = bacsDebit;
     this.bancontact = bancontact;
     this.billingDetails = billingDetails;
+    this.boleto = boleto;
     this.card = card;
     this.customer = customer;
     this.eps = eps;
@@ -228,6 +245,7 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
     this.sepaDebit = sepaDebit;
     this.sofort = sofort;
     this.type = type;
+    this.wechatPay = wechatPay;
   }
 
   public static Builder builder() {
@@ -248,6 +266,8 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
     private Bancontact bancontact;
 
     private BillingDetails billingDetails;
+
+    private Boleto boleto;
 
     private Object card;
 
@@ -283,6 +303,8 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
 
     private Type type;
 
+    private WechatPay wechatPay;
+
     /** Finalize and obtain parameter instance from this builder. */
     public PaymentMethodCreateParams build() {
       return new PaymentMethodCreateParams(
@@ -293,6 +315,7 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
           this.bacsDebit,
           this.bancontact,
           this.billingDetails,
+          this.boleto,
           this.card,
           this.customer,
           this.eps,
@@ -309,7 +332,8 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
           this.paymentMethod,
           this.sepaDebit,
           this.sofort,
-          this.type);
+          this.type,
+          this.wechatPay);
     }
 
     /**
@@ -372,6 +396,15 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
      */
     public Builder setBillingDetails(BillingDetails billingDetails) {
       this.billingDetails = billingDetails;
+      return this;
+    }
+
+    /**
+     * If this is a {@code boleto} PaymentMethod, this hash contains details about the Boleto
+     * payment method.
+     */
+    public Builder setBoleto(Boleto boleto) {
+      this.boleto = boleto;
       return this;
     }
 
@@ -588,6 +621,15 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
      */
     public Builder setType(Type type) {
       this.type = type;
+      return this;
+    }
+
+    /**
+     * If this is an {@code wechat_pay} PaymentMethod, this hash contains details about the
+     * wechat_pay payment method.
+     */
+    public Builder setWechatPay(WechatPay wechatPay) {
+      this.wechatPay = wechatPay;
       return this;
     }
   }
@@ -1286,6 +1328,74 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
           this.state = state;
           return this;
         }
+      }
+    }
+  }
+
+  @Getter
+  public static class Boleto {
+    /**
+     * Map of extra parameters for custom features not available in this client library. The content
+     * in this map is not serialized under this field's {@code @SerializedName} value. Instead, each
+     * key/value pair is serialized as if the key is a root-level field (serialized) name in this
+     * param object. Effectively, this map is flattened to its parent instance.
+     */
+    @SerializedName(ApiRequestParams.EXTRA_PARAMS_KEY)
+    Map<String, Object> extraParams;
+
+    /** Uniquely identifies this customer tax_id (CNPJ or CPF). */
+    @SerializedName("tax_id")
+    String taxId;
+
+    private Boleto(Map<String, Object> extraParams, String taxId) {
+      this.extraParams = extraParams;
+      this.taxId = taxId;
+    }
+
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    public static class Builder {
+      private Map<String, Object> extraParams;
+
+      private String taxId;
+
+      /** Finalize and obtain parameter instance from this builder. */
+      public Boleto build() {
+        return new Boleto(this.extraParams, this.taxId);
+      }
+
+      /**
+       * Add a key/value pair to `extraParams` map. A map is initialized for the first `put/putAll`
+       * call, and subsequent calls add additional key/value pairs to the original map. See {@link
+       * PaymentMethodCreateParams.Boleto#extraParams} for the field documentation.
+       */
+      public Builder putExtraParam(String key, Object value) {
+        if (this.extraParams == null) {
+          this.extraParams = new HashMap<>();
+        }
+        this.extraParams.put(key, value);
+        return this;
+      }
+
+      /**
+       * Add all map key/value pairs to `extraParams` map. A map is initialized for the first
+       * `put/putAll` call, and subsequent calls add additional key/value pairs to the original map.
+       * See {@link PaymentMethodCreateParams.Boleto#extraParams} for the field documentation.
+       */
+      public Builder putAllExtraParam(Map<String, Object> map) {
+        if (this.extraParams == null) {
+          this.extraParams = new HashMap<>();
+        }
+        this.extraParams.putAll(map);
+        return this;
+      }
+
+      /** Uniquely identifies this customer tax_id (CNPJ or CPF). */
+      public Builder setTaxId(String taxId) {
+        this.taxId = taxId;
+        return this;
       }
     }
   }
@@ -2440,6 +2550,61 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
     }
   }
 
+  @Getter
+  public static class WechatPay {
+    /**
+     * Map of extra parameters for custom features not available in this client library. The content
+     * in this map is not serialized under this field's {@code @SerializedName} value. Instead, each
+     * key/value pair is serialized as if the key is a root-level field (serialized) name in this
+     * param object. Effectively, this map is flattened to its parent instance.
+     */
+    @SerializedName(ApiRequestParams.EXTRA_PARAMS_KEY)
+    Map<String, Object> extraParams;
+
+    private WechatPay(Map<String, Object> extraParams) {
+      this.extraParams = extraParams;
+    }
+
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    public static class Builder {
+      private Map<String, Object> extraParams;
+
+      /** Finalize and obtain parameter instance from this builder. */
+      public WechatPay build() {
+        return new WechatPay(this.extraParams);
+      }
+
+      /**
+       * Add a key/value pair to `extraParams` map. A map is initialized for the first `put/putAll`
+       * call, and subsequent calls add additional key/value pairs to the original map. See {@link
+       * PaymentMethodCreateParams.WechatPay#extraParams} for the field documentation.
+       */
+      public Builder putExtraParam(String key, Object value) {
+        if (this.extraParams == null) {
+          this.extraParams = new HashMap<>();
+        }
+        this.extraParams.put(key, value);
+        return this;
+      }
+
+      /**
+       * Add all map key/value pairs to `extraParams` map. A map is initialized for the first
+       * `put/putAll` call, and subsequent calls add additional key/value pairs to the original map.
+       * See {@link PaymentMethodCreateParams.WechatPay#extraParams} for the field documentation.
+       */
+      public Builder putAllExtraParam(Map<String, Object> map) {
+        if (this.extraParams == null) {
+          this.extraParams = new HashMap<>();
+        }
+        this.extraParams.putAll(map);
+        return this;
+      }
+    }
+  }
+
   public enum Type implements ApiRequestParams.EnumParam {
     @SerializedName("acss_debit")
     ACSS_DEBIT("acss_debit"),
@@ -2458,6 +2623,9 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
 
     @SerializedName("bancontact")
     BANCONTACT("bancontact"),
+
+    @SerializedName("boleto")
+    BOLETO("boleto"),
 
     @SerializedName("card")
     CARD("card"),
@@ -2487,7 +2655,10 @@ public class PaymentMethodCreateParams extends ApiRequestParams {
     SEPA_DEBIT("sepa_debit"),
 
     @SerializedName("sofort")
-    SOFORT("sofort");
+    SOFORT("sofort"),
+
+    @SerializedName("wechat_pay")
+    WECHAT_PAY("wechat_pay");
 
     @Getter(onMethod_ = {@Override})
     private final String value;
